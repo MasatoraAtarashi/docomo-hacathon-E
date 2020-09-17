@@ -6,8 +6,8 @@ class LinebotController < ApplicationController
 
   def client
     @client ||= Line::Bot::Client.new { |config|
-      config.channel_secret = 'eae8b6c8071d67d852b3baf476f4aa40'
-      config.channel_token = 'cBPBSI2kr5jnQp9v+gRTPef0VvQtSYo5pvGO03yVSzWg+OXjWD78Ow3zd1Pa45DqMhKoa4xNYxAcbJOvJiBFNTeb3i35KmsBxvTuqbM+k5mtk9ECNIygK2o2i9jlceqe7kYr5GOn9DiIScazrjexBwdB04t89/1O/w1cDnyilFU='
+      config.channel_secret = ''
+      config.channel_token = ''
     }
   end
 
@@ -28,28 +28,22 @@ class LinebotController < ApplicationController
         case event.type
         when Line::Bot::Event::MessageType::Text
           case @message
-          when "ガーデニング"
-            message = {
-              type: 'text',
-              text: Community.first.url
-            }
+          when "使い方"
+            message = Linebot.first_reply
             client.reply_message(event['replyToken'], message)
-          when "料理"
-            message = {
-              type: 'text',
-              text: Community.first.url
-            }
+          when "登録"
+            message = Linebot.register_reply
             client.reply_message(event['replyToken'], message)
-          when "主婦"
-            message = {
-              type: 'text',
-              text: Community.first.url
-            }
+          when "コミュニティURL登録送信"
+            message = Linebot.register_reply
             client.reply_message(event['replyToken'], message)
-          when "子育て"
+          when "検索", "再検索"
+            message = Linebot.search_reply
+            client.reply_message(event['replyToken'], message)
+          when "ガーデニング", "料理", "子育て", "主婦"
             message = {
-              type: 'text',
-              text: Community.first.url
+              "type": "text",
+              "text": "コミュニティ名: #{Community.first.name}\nurl: #{Community.first.url}"
             }
             client.reply_message(event['replyToken'], message)
           else
