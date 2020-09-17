@@ -46,13 +46,19 @@ class LinebotController < ApplicationController
             client.reply_message(event['replyToken'], message)
           when 'ランダム'
             communities = Community.all.sample(3)
-            communities.each do |community|
-              message = {
-                "type": 'text',
-                "text": "コミュニティ名: #{community.name}\nurl: #{community.url}"
-              }
-              client.reply_message(event['replyToken'], message)
-            end
+            message1 = {
+              "type": 'text',
+              "text": "#{communities[0].name}\n#{communities[0].url}"
+            }
+            message2 = {
+              "type": 'text',
+              "text": "#{communities[1].name}\n#{communities[1].url}"
+            }
+            message3 = {
+              "type": 'text',
+              "text": "#{communities[2].name}\n#{communities[2].url}"
+            }
+            client.reply_message(event['replyToken'], [message1, message2, message3])
           when 'ガーデニング', '料理', '子育て', '主婦'
             message = {
               "type": 'text',
