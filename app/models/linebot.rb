@@ -122,19 +122,6 @@ class Linebot < ApplicationRecord
     {
       "type": 'text',
       "text": '登録したいURLを入力してください',
-      "quickReply": {
-        "items":
-        [
-          {
-            "type": 'action',
-            "action": {
-              "type": 'message',
-              "label": '送信',
-              "text": 'コミュニティURL登録送信'
-            }
-          }
-        ]
-      }
     }
   end
 
