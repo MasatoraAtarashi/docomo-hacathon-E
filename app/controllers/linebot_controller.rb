@@ -6,8 +6,8 @@ class LinebotController < ApplicationController
 
   def client
     @client ||= Line::Bot::Client.new { |config|
-      config.channel_secret = ''
-      config.channel_token = ''
+      config.channel_secret = Rails.application.credentials.linebot[:channel_secret]
+      config.channel_token = Rails.application.credentials.linebot[:channel_token]
     }
   end
 
@@ -22,7 +22,9 @@ class LinebotController < ApplicationController
     events = client.parse_events_from(body)
 
     events.each { |event|
-      @message = event.message['text'].gsub(" ", "") 
+      if event.message['text']
+        @message = event.message['text'].gsub(" ", "")
+      end
       case event
       when Line::Bot::Event::Message
         case event.type
