@@ -32,8 +32,8 @@ class LinebotController < ApplicationController
             message = Linebot.first_reply
             client.reply_message(event['replyToken'], message)
           when '登録'
-            message = Linebot.register_reply
-            client.reply_message(event['replyToken'], message)
+            # message = Linebot.register_reply
+            client.reply_message(event['replyToken'], template)
           when 'コミュニティURL登録送信'
             message = Linebot.register_reply
             client.reply_message(event['replyToken'], message)
@@ -96,5 +96,24 @@ class LinebotController < ApplicationController
     end
 
     head :ok
+  end
+
+  def template
+    {
+      "type": "template",
+      "altText": "アクセス中",
+      "template": {
+          "type": "buttons",
+          "title": "コミュニティ登録",
+          "text": "コミュニティを登録しますか？",
+          "actions": [
+              {
+                "type": "uri",
+                "label": "登録する",
+                "uri": "https://f26fda31f073.ngrok.io/communities/new"
+              }
+          ]
+      }
+    }
   end
 end
