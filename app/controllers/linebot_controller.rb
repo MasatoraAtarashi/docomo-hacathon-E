@@ -39,9 +39,24 @@ class LinebotController < ApplicationController
           when "コミュニティURL登録送信"
             message = Linebot.register_reply
             client.reply_message(event['replyToken'], message)
-          when "検索", "再検索"
-            message = Linebot.search_reply
+          when "検索"
+            message = Linebot.category_first_reply
             client.reply_message(event['replyToken'], message)
+          when "地域", "趣味", "年齢", "性別", "職業"
+            message = Linebot.category_second_reply(@message)
+            client.reply_message(event['replyToken'], message)
+          when "実行"
+            message = Linebot.search_execute_reply
+            client.reply_message(event['replyToken'], message)
+          when "ランダム"
+            communities = Community.all.sample(3)
+            communities.each do |community|
+              message = {
+                "type": "text",
+                "text": "コミュニティ名: #{community.name}\nurl: #{community.url}"
+              }
+              client.reply_message(event['replyToken'], message)
+            end
           when "ガーデニング", "料理", "子育て", "主婦"
             message = {
               "type": "text",
@@ -52,6 +67,9 @@ class LinebotController < ApplicationController
             message = Linebot.first_reply
             client.reply_message(event['replyToken'], message)
           end
+        else
+          message = Linebot.first_reply
+            client.reply_message(event['replyToken'], message)
         end
       end
     }

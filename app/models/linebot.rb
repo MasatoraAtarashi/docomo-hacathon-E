@@ -36,6 +36,66 @@ class Linebot < ApplicationRecord
     }
   end
 
+  def self.category_first_reply
+    { 
+      "type": "text",
+      "text": "大カテゴリを選んでください。ランダムなコミュニティに参加したい場合は「ランダム」と送信してください",
+      "quickReply": {
+        "items":
+        [
+          {
+            "type": "action",
+            "action": {
+            "type": "message",
+            "label": "場所",
+            "text": "場所"
+            }
+          },
+          {
+            "type": "action",
+            "action": {
+            "type": "message",
+            "label": "趣味",
+            "text": "趣味"
+            }
+          },
+          {
+            "type": "action",
+            "action": {
+            "type": "message",
+            "label": "年齢",
+            "text": "年齢"
+            }
+          },
+          {
+            "type": "action",
+            "action": {
+            "type": "message",
+            "label": "性別",
+            "text": "性別"
+            }
+          },
+          {
+            "type": "action",
+            "action": {
+            "type": "message",
+            "label": "職業",
+            "text": "職業"
+            }
+          },
+          {
+            "type": "action",
+            "action": {
+            "type": "message",
+            "label": "ランダム",
+            "text": "ランダム"
+            }
+          },
+        ]
+      }
+    }
+  end
+
   def self.register_reply
     {
       "type": "text",
