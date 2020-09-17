@@ -10,39 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_17_064505) do
-
+ActiveRecord::Schema.define(version: 20_200_917_064_505) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension 'plpgsql'
 
-  create_table "categories", force: :cascade do |t|
-    t.string "name"
-    t.integer "ancestor_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table 'categories', force: :cascade do |t|
+    t.string 'name'
+    t.integer 'ancestor_id'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
 
-  create_table "communities", force: :cascade do |t|
-    t.string "name"
-    t.string "url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table 'communities', force: :cascade do |t|
+    t.string 'name'
+    t.string 'url'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
 
-  create_table "community_categories", force: :cascade do |t|
-    t.bigint "community_id"
-    t.bigint "category_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["category_id"], name: "index_community_categories_on_category_id"
-    t.index ["community_id"], name: "index_community_categories_on_community_id"
+  create_table 'community_categories', force: :cascade do |t|
+    t.bigint 'community_id'
+    t.bigint 'category_id'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['category_id'], name: 'index_community_categories_on_category_id'
+    t.index ['community_id'], name: 'index_community_categories_on_community_id'
   end
 
-  create_table "linebots", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table 'linebots', force: :cascade do |t|
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
 
-  add_foreign_key "community_categories", "categories"
-  add_foreign_key "community_categories", "communities"
+  add_foreign_key 'community_categories', 'categories'
+  add_foreign_key 'community_categories', 'communities'
 end
