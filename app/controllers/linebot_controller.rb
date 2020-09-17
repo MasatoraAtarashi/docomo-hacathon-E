@@ -46,6 +46,10 @@ class LinebotController < ApplicationController
             client.reply_message(event['replyToken'], message)
           when 'ランダム'
             communities = Community.all.sample(3)
+            message0 = {
+              "type": 'text',
+              "text": "おすすめのコミュニティ"
+            }
             message1 = {
               "type": 'text',
               "text": "#{communities[0].name}\n#{communities[0].url}"
@@ -58,7 +62,7 @@ class LinebotController < ApplicationController
               "type": 'text',
               "text": "#{communities[2].name}\n#{communities[2].url}"
             }
-            client.reply_message(event['replyToken'], [message1, message2, message3])
+            client.reply_message(event['replyToken'], [message0, message1, message2, message3])
           when 'ガーデニング', '料理', '子育て', '主婦'
             message = {
               "type": 'text',
