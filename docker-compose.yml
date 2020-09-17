@@ -1,17 +1,24 @@
-version: '3'
+version: '2'
 services:
   db:
     image: postgres
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
-    environment:
-      POSTGRES_PASSWORD: password
+  nginx:
+    build: containers/nginx
+    ports:
+      - "80:80"
+    volumes_from:
+      - web
+    depends_on:
+      - web
   web:
     build: .
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
-      - .:/myapp
-    ports:
-      - "3000:3000"
+      - .:/app
+      - /log # persist logs
     depends_on:
       - db
+    #environment:
+      #RAILS_ENV: 'production'
+      #RACK_ENV: 'production'
