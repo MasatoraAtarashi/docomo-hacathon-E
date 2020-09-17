@@ -68,28 +68,29 @@ class LinebotController < ApplicationController
                   "type": "image_carousel",
                   "columns": [
                       {
-                        "imageUrl": "https://excitemap-s3.s3.amazonaws.com/uploads/spot/picture/320/455nbVSosTsvhjhMO5f4ZbBAk6YV50.jpeg",
+                        "imageUrl": communities[0].picture,
                         "action": {
                           "type": "postback",
                           "label": communities[0].name,
                           "data": "action=buy&itemid=111",
-                          "uri": "http://example.com/page/222"
+                          "uri": communities[0].url
                         }
                       },
                       {
-                        "imageUrl": "https://example.com/bot/images/item2.jpg",
+                        "imageUrl": communities[1].picture,
                         "action": {
                           "type": "message",
                           "label": communities[1].name,
-                          "text": "yes"
+                          "text": "yes",
+                          "uri": communities[1].picture
                         }
                       },
                       {
-                        "imageUrl": "https://example.com/bot/images/item3.jpg",
+                        "imageUrl": communities[2].picture,
                         "action": {
                           "type": "uri",
                           "label": communities[2].name,
-                          "uri": "http://example.com/page/222"
+                          "uri": communities[2].picture
                         }
                       }
                   ]
