@@ -26,6 +26,24 @@ class LinebotController < ApplicationController
       when Line::Bot::Event::Message
         case event.type
         when Line::Bot::Event::MessageType::Text
+          case @message
+          when 'ガーデニング']
+            message = Community.first.name
+            client.reply_message(event['replyToken'], message)
+          when '料理'
+            message = Community.first.name
+            client.reply_message(event['replyToken'], message)
+          when '主婦'
+            message = Community.first.name
+            client.reply_message(event['replyToken'], message)
+          when '子育て'
+            # message = ::LineClient.second_reply_hokkaido_tohoku
+            message = Community.first.name
+            client.reply_message(event['replyToken'], message)
+          else 
+            message = ::Linebot.first_reply
+            client.reply_message(event['replyToken'], message)
+          end
           message = {
             type: 'text',
             text: event.message['text']
