@@ -61,23 +61,41 @@ class LinebotController < ApplicationController
             client.reply_message(event['replyToken'], messages)
           when 'ランダム'
             communities = Community.all.sample(3)
-            message0 = {
-              "type": 'text',
-              "text": "おすすめのコミュニティ"
+            messages = {
+              "type": "template",
+              "altText": "this is a image carousel template",
+              "template": {
+                  "type": "image_carousel",
+                  "columns": [
+                      {
+                        "imageUrl": "https://excitemap-s3.s3.amazonaws.com/uploads/spot/picture/320/455nbVSosTsvhjhMO5f4ZbBAk6YV50.jpeg",
+                        "action": {
+                          "type": "postback",
+                          "label": communities[0].name,
+                          "data": "action=buy&itemid=111",
+                          "uri": "http://example.com/page/222"
+                        }
+                      },
+                      {
+                        "imageUrl": "https://example.com/bot/images/item2.jpg",
+                        "action": {
+                          "type": "message",
+                          "label": communities[1].name,
+                          "text": "yes"
+                        }
+                      },
+                      {
+                        "imageUrl": "https://example.com/bot/images/item3.jpg",
+                        "action": {
+                          "type": "uri",
+                          "label": communities[2].name,
+                          "uri": "http://example.com/page/222"
+                        }
+                      }
+                  ]
+              }
             }
-            message1 = {
-              "type": 'text',
-              "text": "#{communities[0].name}\n#{communities[0].url}"
-            }
-            message2 = {
-              "type": 'text',
-              "text": "#{communities[1].name}\n#{communities[1].url}"
-            }
-            message3 = {
-              "type": 'text',
-              "text": "#{communities[2].name}\n#{communities[2].url}"
-            }
-            client.reply_message(event['replyToken'], [message0, message1, message2, message3])
+            client.reply_message(event['replyToken'], messages)
           when 'ガーデニング', '料理', '子育て', '主婦'
             message = {
               "type": 'text',
