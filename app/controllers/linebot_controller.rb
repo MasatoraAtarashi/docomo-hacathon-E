@@ -46,18 +46,27 @@ class LinebotController < ApplicationController
           when *second_categories
             category_id = Category.find_by(name: @message)
             community_ids = CommunityCategory.where(category_id: category_id).pluck(:community_id)
-            message0 = {
-              "type": 'text',
-              "text": "おすすめのコミュニティ"
-            }
-            messages = [message0]
+            messages = []
             community_ids.each do |id|
               community = Community.find(id)
               messages << {
-                "type": 'text',
-                "text": "#{community.name}\n#{community.url}"
+                "imageUrl": community.picture,
+                "action": {
+                  "type": "postback",
+                  "label": community.name,
+                  "data": "action=buy&itemid=111",
+                  "uri": community.url
+                }
               }
             end
+            messages = {
+              "type": "template",
+              "altText": "this is a image carousel template",
+              "template": {
+                  "type": "image_carousel",
+                  "columns": messages
+              }
+            }
             client.reply_message(event['replyToken'], messages)
           when 'ランダム'
             communities = Community.all.sample(3)
@@ -81,7 +90,6 @@ class LinebotController < ApplicationController
                         "action": {
                           "type": "message",
                           "label": communities[1].name,
-                          "text": "yes",
                           "uri": communities[1].picture
                         }
                       },
