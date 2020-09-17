@@ -46,8 +46,8 @@ class Linebot < ApplicationRecord
             "type": 'action',
             "action": {
               "type": 'message',
-              "label": '場所',
-              "text": '場所'
+              "label": '地域',
+              "text": '地域'
             }
           },
           {
@@ -91,6 +91,29 @@ class Linebot < ApplicationRecord
             }
           }
         ]
+      }
+    }
+  end
+
+  def self.category_second_reply(message)
+    category_id = Category.find_by(name: message)
+    categories = Category.where(ancestor_id: category_id)
+    items = []
+    categories.each do |category|
+      items << {
+        "type": 'action',
+          "action": {
+            "type": 'message',
+            "label": category.name,
+            "text": category.name
+          }
+      }
+    end
+    {
+      "type": 'text',
+      "text": '小カテゴリを選んでください',
+      "quickReply": {
+        "items": items
       }
     }
   end
