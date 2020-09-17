@@ -25,6 +25,8 @@ class LinebotController < ApplicationController
       when Line::Bot::Event::Message
         case event.type
         when Line::Bot::Event::MessageType::Text
+          # Category.where.not(ancestor_id: nil).pluck(:name)毎回クエリ発行すると遅い
+          second_categories = ["九州", "中国四国", "近畿", "中部", "関東", "東北北海道", "料理", "ハンドメイド", "ゲーム", "音楽", "アウトドア", "旅行", "スポーツ", "その他", "20代中心", "30代中心", "40代中心", "その他", "男性中心", "女性中心", "営業", "教育", "コンサル", "ITエンジニア", "クリエイティブ"]
           case @message
           when '使い方'
             message = Linebot.first_reply
@@ -41,9 +43,22 @@ class LinebotController < ApplicationController
           when '地域', '趣味', '年齢', '性別', '職業'
             message = Linebot.category_second_reply(@message)
             client.reply_message(event['replyToken'], message)
-          when '実行'
-            message = Linebot.search_execute_reply
-            client.reply_message(event['replyToken'], message)
+          when *second_categories
+            category_id = Category.find_by(name: @message)
+            community_ids = CommunityCategory.where(category_id: category_id).pluck(:community_id)
+            message0 = {
+              "type": 'text',
+              "text": "おすすめのコミュニティ"
+            }
+            messages = [message0]
+            community_ids.each do |id|
+              community = Community.find(id)
+              messages << {
+                "type": 'text',
+                "text": "#{community.name}\n#{community.url}"
+              }
+            end
+            client.reply_message(event['replyToken'], messages)
           when 'ランダム'
             communities = Community.all.sample(3)
             message0 = {
