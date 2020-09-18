@@ -20,7 +20,7 @@ class LinebotController < ApplicationController
     events = client.parse_events_from(body)
 
     events.each do |event|
-      @message = event.message['text'].delete(' ') if event.message['text']
+      @message = event.message['text'].delete(' ') if event.message && event.message['text']
       case event
       when Line::Bot::Event::Message
         case event.type
@@ -59,7 +59,7 @@ class LinebotController < ApplicationController
                 }
               }
             end
-            messages = {
+            message = {
               "type": "template",
               "altText": "this is a image carousel template",
               "template": {
@@ -67,48 +67,28 @@ class LinebotController < ApplicationController
                   "columns": messages
               }
             }
-            client.reply_message(event['replyToken'], messages)
+            client.reply_message(event['replyToken'], message)
           when 'ランダム'
             communities = Community.all.sample(3)
-            messages = {
+            messages = []
+            communities.each do |community|
+              messages << {
+                "imageUrl": community.picture,
+                "action": {
+                  "type": "postback",
+                  "label": community.name,
+                  "data": "action=buy&itemid=111",
+                  "uri": community.url
+                }
+              }
+            end
+            message = {
               "type": "template",
               "altText": "this is a image carousel template",
               "template": {
                   "type": "image_carousel",
-                  "columns": [
-                      {
-                        "imageUrl": communities[0].picture,
-                        "action": {
-                          "type": "postback",
-                          "label": communities[0].name,
-                          "data": "action=buy&itemid=111",
-                          "uri": communities[0].url
-                        }
-                      },
-                      {
-                        "imageUrl": communities[1].picture,
-                        "action": {
-                          "type": "message",
-                          "label": communities[1].name,
-                          "uri": communities[1].picture
-                        }
-                      },
-                      {
-                        "imageUrl": communities[2].picture,
-                        "action": {
-                          "type": "uri",
-                          "label": communities[2].name,
-                          "uri": communities[2].picture
-                        }
-                      }
-                  ]
+                  "columns": messages
               }
-            }
-            client.reply_message(event['replyToken'], messages)
-          when 'ガーデニング', '料理', '子育て', '主婦'
-            message = {
-              "type": 'text',
-              "text": "コミュニティ名: #{Community.first.name}\nurl: #{Community.first.url}"
             }
             client.reply_message(event['replyToken'], message)
           else
@@ -137,7 +117,7 @@ class LinebotController < ApplicationController
               {
                 "type": "uri",
                 "label": "登録する",
-                "uri": "https://f26fda31f073.ngrok.io/communities/new"
+                "uri": "https://docomo-e.herokuapp.com/communities/new"
               }
           ]
       }
