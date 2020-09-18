@@ -1,6 +1,18 @@
-community = Community.create(name: '主婦コミュニティ', url: 'https://discord.gg/uYebc84', picture: 'https://bit.ly/2ZKrmQg')
-fishing_community = Community.create(name: '釣りコミュニティ', url: 'https://discord.gg/uYebc84', picture: 'https://bit.ly/32DAPe3')
-study_community = Community.create(name: '勉強会コミュニティ', url: 'https://discord.gg/uYebc84', picture: 'https://bit.ly/35L30K1')
+community = Community.create(
+  name: '主婦コミュニティ', 
+  url: 'https://discord.gg/uYebc84', 
+  picture: 'https://bit.ly/2ZKrmQg'
+)
+fishing_community = Community.create(
+  name: '釣りコミュニティ', 
+  url: 'https://discord.gg/uYebc84', 
+  picture: 'https://bit.ly/32DAPe3'
+)
+study_community = Community.create(
+  name: '勉強会コミュニティ', 
+  url: 'https://discord.gg/uYebc84', 
+  picture: 'https://bit.ly/35L30K1'
+)
 c1 = Category.create(name: '地域')
 
 kyusyu = Category.create(name: '九州', ancestor_id: c1.id)
