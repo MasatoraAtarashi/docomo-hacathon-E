@@ -1,7 +1,11 @@
 <h1>コミュニティ登録</h1>
+<% flash.each do |message_type, message| %>
+  <%= message %>
+<% end %>
 <%=form_tag({controller: :communities, action: :create}) do %>
     コミュニティ名: <input type="text" name="name"><br>
     URL: <input type="text" name="url"><br>
+    画像URL: <input type="text" name="picture"><br>
     地域: <input type="text" name="region"><br>
     趣味: <input type="text" name="hobby"><br>
     年齢: <input type="text" name="age"><br>
