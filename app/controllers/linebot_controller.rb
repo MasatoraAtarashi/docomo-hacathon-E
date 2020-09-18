@@ -115,7 +115,7 @@ class LinebotController < ApplicationController
               {
                 "type": "uri",
                 "label": "登録する",
-                "uri": "https://a4af07913e0a.ngrok.io/communities/new"
+                "uri": "https://docomo-e.herokuapp.com/communities/new"
               }
           ]
       }
