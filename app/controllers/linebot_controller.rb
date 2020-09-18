@@ -52,9 +52,8 @@ class LinebotController < ApplicationController
               messages << {
                 "imageUrl": community.picture,
                 "action": {
-                  "type": "postback",
+                  "type": "uri",
                   "label": community.name,
-                  "data": "action=buy&itemid=111",
                   "uri": community.url
                 }
               }
@@ -75,9 +74,8 @@ class LinebotController < ApplicationController
               messages << {
                 "imageUrl": community.picture,
                 "action": {
-                  "type": "postback",
+                  "type": "uri",
                   "label": community.name,
-                  "data": "action=buy&itemid=111",
                   "uri": community.url
                 }
               }
