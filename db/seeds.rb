@@ -1,3 +1,7 @@
+Community.destroy_all
+Category.destroy_all
+CommunityCategory.destroy_all
+
 community = Community.create(
   name: '主婦コミュニティ', 
   url: 'https://discord.gg/uYebc84', 
@@ -80,15 +84,15 @@ CommunityCategory.create(community_id: osanpo_community.id, category_id: girl.id
 CommunityCategory.create(community_id: osanpo_community.id, category_id: outdoor.id)
 CommunityCategory.create(community_id: osanpo_community.id, category_id: kanto.id)
 
-regions = [kyusyu, tyugoku, kinki, tyubu, kanto, hokkaido]
-regions.each do |region|
-  fishing_community_each_region = Community.create(
-    name: "釣りコミュニティ(#{region.name})", 
-    url: 'https://discord.gg/uYebc84', 
-    picture: 'https://bit.ly/32DAPe3'
-  )
-  CommunityCategory.create(community_id: fishing_community_each_region.id, category_id: region.id)
-  CommunityCategory.create(community_id: fishing_community_each_region.id, category_id: outdoor.id)
-  CommunityCategory.create(community_id: fishing_community_each_region.id, category_id: man.id)
-  CommunityCategory.create(community_id: fishing_community_each_region.id, category_id: yonju.id)
-end
+# regions = [kyusyu, tyugoku, kinki, tyubu, kanto, hokkaido]
+# regions.each do |region|
+#   fishing_community_each_region = Community.create(
+#     name: "釣りコミュニティ(#{region.name})", 
+#     url: 'https://discord.gg/uYebc84', 
+#     picture: 'https://bit.ly/32DAPe3'
+#   )
+#   CommunityCategory.create(community_id: fishing_community_each_region.id, category_id: region.id)
+#   CommunityCategory.create(community_id: fishing_community_each_region.id, category_id: outdoor.id)
+#   CommunityCategory.create(community_id: fishing_community_each_region.id, category_id: man.id)
+#   CommunityCategory.create(community_id: fishing_community_each_region.id, category_id: yonju.id)
+# end
