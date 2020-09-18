@@ -2,7 +2,7 @@ class Linebot < ApplicationRecord
   def self.first_reply
     {
       "type": 'text',
-      "text": "こんにちは！OOO（サービス名）です！\n条件にあったコミュニティを検索できます。\n使い方を見る時は「使い方」\n検索を開始する時に「検索」\n自分のコミュニティを登録したいときは「登録」をタップしてください！",
+      "text": "条件にあったコミュニティを検索できます。\n使い方を見る時は「使い方」\n検索を開始する時に「検索」\n自分のコミュニティを登録したいときは「登録」をタップしてください！",
       "quickReply": {
         "items":
         [
@@ -122,19 +122,6 @@ class Linebot < ApplicationRecord
     {
       "type": 'text',
       "text": '登録したいURLを入力してください',
-      "quickReply": {
-        "items":
-        [
-          {
-            "type": 'action',
-            "action": {
-              "type": 'message',
-              "label": '送信',
-              "text": 'コミュニティURL登録送信'
-            }
-          }
-        ]
-      }
     }
   end
 

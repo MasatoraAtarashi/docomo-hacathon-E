@@ -3,7 +3,8 @@ class CreateCommunities < ActiveRecord::Migration[5.2]
     create_table :communities do |t|
       t.string :name
       t.string :url
-
+      t.string :picture
+      
       t.timestamps
     end
   end

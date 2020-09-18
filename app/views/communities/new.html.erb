@@ -1,0 +1,11 @@
+<h1>コミュニティ登録</h1>
+<%=form_tag({controller: :communities, action: :create}) do %>
+    コミュニティ名: <input type="text" name="name"><br>
+    URL: <input type="text" name="url"><br>
+    地域: <input type="text" name="region"><br>
+    趣味: <input type="text" name="hobby"><br>
+    年齢: <input type="text" name="age"><br>
+    性別: <input type="text" name="sex"><br>
+    職業: <input type="text" name="job"><br>
+    <input type="submit"> 
+<% end %>
