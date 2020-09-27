@@ -11,4 +11,5 @@ https://information.nttdocomo-fresh.jp/
 @089kgdoy
 
 ### QRコード
-<img src="https://qr-official.line.me/sid/L/089kgdoy.png">
+<img src="https://i.imgur.com/as2eBnF.png">
+
